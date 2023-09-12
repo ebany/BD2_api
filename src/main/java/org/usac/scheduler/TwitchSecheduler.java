@@ -36,6 +36,7 @@ public class TwitchSecheduler {
 
         if (authDto == null) {
             System.out.println("No se pudo obtener el token");
+            return;
         }
 
         System.out.println(apiService.getGames("Bearer " + authDto.getAccess_token(), clientId));
