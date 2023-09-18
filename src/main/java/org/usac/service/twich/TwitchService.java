@@ -1,11 +1,7 @@
 package org.usac.service.twich;
 
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.HeaderParam;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -22,11 +18,14 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface TwitchService {
 
-    @GET
+    @POST
     @Path("/games")
     public String getGames(
             @HeaderParam("Authorization") String token,
-            @HeaderParam("Client-ID") String clientId
+            @HeaderParam("Client-ID") String clientId,
+            @QueryParam("fields") String fields,
+            @QueryParam("limit") int limit,
+            @QueryParam("offset") int offset
     );
 
 }
