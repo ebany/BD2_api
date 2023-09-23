@@ -28,4 +28,34 @@ public interface TwitchService {
             @QueryParam("offset") int offset
     );
 
+    @POST
+    @Path("/genres")
+    public String getGenres(
+            @HeaderParam("Authorization") String token,
+            @HeaderParam("Client-ID") String clientId,
+            @QueryParam("fields") String fields,
+            @QueryParam("limit") int limit,
+            @QueryParam("offset") int offset
+    );
+
+    @POST
+    @Path("/platforms")
+    public String getPlatforms(
+            @HeaderParam("Authorization") String token,
+            @HeaderParam("Client-ID") String clientId,
+            @QueryParam("fields") String fields,
+            @QueryParam("limit") int limit,
+            @QueryParam("offset") int offset
+    );
+
+    @POST
+    @Path("/languages")
+    public String getLanguages(
+            @HeaderParam("Authorization") String token,
+            @HeaderParam("Client-ID") String clientId,
+            @QueryParam("fields") String fields,
+            @QueryParam("limit") int limit,
+            @QueryParam("offset") int offset
+    );
+
 }
