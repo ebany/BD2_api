@@ -1,0 +1,11 @@
+docker exec mysql /usr/bin/mysqldump -u root --password=change-me proyecto1 > backup.sql
+
+cat backup.sql | docker exec -i mysql /usr/bin/mysql -u root --password=change-me proyecto1
+
+SHOW TABLE STATUS where name like 'Videojuego';
+
+SHOW FULL COLUMNS FROM Videojuego;
+
+select  ENGINE, TABLE_SCHEMA, TABLE_NAME, Round( DATA_LENGTH/1024/1024) as data_length , round(INDEX_LENGTH/1024/1024) as index_length, round(DATA_FREE/ 1024/1024) as data_free, (data_free/(index_length+data_length)) as frag_ratio from information_schema.tables  where  DATA_FREE > 0 and TABLE_SCHEMA like 'proyecto1' order by frag_ratio desc;
+
+optimize table plataforma_videojuego;
