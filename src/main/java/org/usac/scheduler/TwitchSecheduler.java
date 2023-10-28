@@ -67,13 +67,16 @@ public class TwitchSecheduler {
     private final String fields = "name,platforms,genres, summary, storyline, first_release_date, rating, rating_count";
     private final String genreFields = "name";
 
-    private int page = 119800;
+    private int page = 0;
     private final int limit = 500;
 
     private AuthDto authDto;
 
     @Scheduled(every = "2s")
     void getTwitchGames() {
+        if(true) {
+            return;
+        }
         if (authDto == null) {
             authDto = authService.oauth2(clientId, clientSecret, "client_credentials");
             return;
@@ -123,13 +126,13 @@ public class TwitchSecheduler {
 
                 if (item.getGenres().size() > 0) {
                     for (Long genre : item.getGenres()) {
-                        VideoGenRepo.persistAndFlush(new VideojuegoGenero(genre, item.getId()));
+                        VideoGenRepo.persistAndFlush(new VideojuegoGenero(genre, juego.getId()));
                     }
                 }
 
                 if (item.getPlatforms().size() > 0) {
                     for (Long plarform : item.getPlatforms()) {
-                        plataformaVideoRepo.persistAndFlush(new PlataformaVideojuego(item.getId(), plarform));
+                        plataformaVideoRepo.persistAndFlush(new PlataformaVideojuego(juego.getId(), plarform));
                     }
                 }
 
@@ -142,9 +145,6 @@ public class TwitchSecheduler {
         }
 
         page += limit;
-//
-//        System.out.println(apiService.getGames("Bearer " + authDto.getAccess_token(), clientId, fields, limit, page));
-
     }
 
 }

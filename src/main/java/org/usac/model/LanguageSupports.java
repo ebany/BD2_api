@@ -1,9 +1,8 @@
 package org.usac.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -15,18 +14,20 @@ import java.io.Serializable;
 public class LanguageSupports implements Serializable {
 
     @Id
-    @Column(name = "game")
-    private Long game;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game")
+    @JsonBackReference(value = "languageSupports")
+    private Videojuego game;
 
     @Id
     @Column(name = "language")
     private Long language;
 
-    public Long getGame() {
+    public Videojuego getGame() {
         return game;
     }
 
-    public void setGame(Long game) {
+    public void setGame(Videojuego game) {
         this.game = game;
     }
 
@@ -37,5 +38,4 @@ public class LanguageSupports implements Serializable {
     public void setLanguage(Long language) {
         this.language = language;
     }
-
 }

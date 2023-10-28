@@ -1,10 +1,10 @@
 package org.usac.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -15,6 +15,10 @@ import java.io.Serializable;
 public class Videojuego implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
     @Column(name = "idVideojuego")
     private Long idVideojuego;
 
@@ -42,6 +46,18 @@ public class Videojuego implements Serializable {
     @Column(name = "aggregatedRaitingCount")
     private Long aggregatedRaitingCount;
 
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "game", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference(value = "languageSupports")
+    private List<LanguageSupports> languageSupports;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "idVideojuego", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference(value = "plataformaVideojuego")
+    private List<PlataformaVideojuego> plataformaVideojuego;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "idVideojuego", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference(value = "videojuegoGenero")
+    private List<VideojuegoGenero> videojuegoGenero;
+
     public Videojuego() {
     }
 
@@ -63,6 +79,14 @@ public class Videojuego implements Serializable {
         this.raitingCount = raitingCount;
         this.aggregatedRaiting = aggregatedRaiting;
         this.aggregatedRaitingCount = aggregatedRaitingCount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getIdVideojuego() {
@@ -137,4 +161,27 @@ public class Videojuego implements Serializable {
         this.aggregatedRaitingCount = aggregatedRaitingCount;
     }
 
+    public List<LanguageSupports> getLanguageSupports() {
+        return languageSupports;
+    }
+
+    public void setLanguageSupports(List<LanguageSupports> languageSupports) {
+        this.languageSupports = languageSupports;
+    }
+
+    public List<PlataformaVideojuego> getPlataformaVideojuego() {
+        return plataformaVideojuego;
+    }
+
+    public void setPlataformaVideojuego(List<PlataformaVideojuego> plataformaVideojuego) {
+        this.plataformaVideojuego = plataformaVideojuego;
+    }
+
+    public List<VideojuegoGenero> getVideojuegoGenero() {
+        return videojuegoGenero;
+    }
+
+    public void setVideojuegoGenero(List<VideojuegoGenero> videojuegoGenero) {
+        this.videojuegoGenero = videojuegoGenero;
+    }
 }

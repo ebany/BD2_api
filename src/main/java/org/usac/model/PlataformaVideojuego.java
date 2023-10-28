@@ -1,9 +1,8 @@
 package org.usac.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -15,8 +14,10 @@ import java.io.Serializable;
 public class PlataformaVideojuego implements Serializable {
 
     @Id
-    @Column(name = "Videojuego_idVideojuego")
-    private Long idVideojuego;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Videojuego_idVideojuego")
+    @JsonBackReference(value = "plataformaVideojuego")
+    private Videojuego idVideojuego;
 
     @Id
     @Column(name = "Plataforma_idPlataforma")
@@ -26,15 +27,15 @@ public class PlataformaVideojuego implements Serializable {
     }
 
     public PlataformaVideojuego(Long idVideojuego, Long idPlataforma) {
-        this.idVideojuego = idVideojuego;
-        this.idPlataforma = idPlataforma;
+        //this.idVideojuego = idVideojuego;
+        //this.idPlataforma = idPlataforma;
     }
 
-    public Long getIdVideojuego() {
+    public Videojuego getIdVideojuego() {
         return idVideojuego;
     }
 
-    public void setIdVideojuego(Long idVideojuego) {
+    public void setIdVideojuego(Videojuego idVideojuego) {
         this.idVideojuego = idVideojuego;
     }
 
@@ -45,5 +46,4 @@ public class PlataformaVideojuego implements Serializable {
     public void setIdPlataforma(Long idPlataforma) {
         this.idPlataforma = idPlataforma;
     }
-
 }
